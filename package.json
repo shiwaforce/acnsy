@@ -1,6 +1,6 @@
 {
   "name": "r-async",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "rethink-async",
   "main": "index.js",
   "scripts": {

@@ -6,8 +6,10 @@ rAsync needs 3 paramter:
 
 - initial object - you can pass data to your tasks
 - task definition - an array, which contains tasks, or another array. the odd arrays executing by waterfall, the even arrays executing by parallel
+- the end task, which called always (if error occured, or normal process)
 
 ```
+/*
     A
    / \
   B1 B2
@@ -15,7 +17,7 @@ rAsync needs 3 paramter:
     C
     |
     D
-
+*/
 var rAsync=require('r-async');
 rAsync({},[
     A,
