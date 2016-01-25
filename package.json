@@ -20,5 +20,8 @@
   "bugs": {
     "url": "https://github.com/sarkiroka/r-async/issues"
   },
-  "homepage": "https://github.com/sarkiroka/r-async#readme"
+  "homepage": "https://github.com/sarkiroka/r-async#readme",
+  "dependencies": {
+    "async": "^1.5.2"
+  }
 }
