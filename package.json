@@ -1,0 +1,24 @@
+{
+  "name": "r-async",
+  "version": "1.0.0",
+  "description": "rethink-async",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sarkiroka/r-async.git"
+  },
+  "keywords": [
+    "async",
+    "parallel",
+    "waterfall"
+  ],
+  "author": "sarkiroka",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/sarkiroka/r-async/issues"
+  },
+  "homepage": "https://github.com/sarkiroka/r-async#readme"
+}
