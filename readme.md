@@ -1,5 +1,9 @@
 # r-async
 
+This module is an extension to the popular async module, providing an extra layer of code execution above it. With this you can define a workflow of function calls using nested arrays, providing both parallel and synchronous execution.
+
+
+
 An easy way to combine serial and parallel tasks, and keep your code readability.
 
 rAsync needs 3 parameter:
