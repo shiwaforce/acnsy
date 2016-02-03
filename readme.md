@@ -1,18 +1,18 @@
-# rAsync - async revisited
+# rAsync - async rethinked
 
-This module is an extension to the popular async module, providing an easy way to combine serial and parallel task execution. With this you can define a workflow of function calls using nested arrays.
+This module is a wrapper to the popular async module, providing an easy way to combine serial/waterfall and parallel task execution. With this you can define a workflow of function calls using nested arrays. It helps to your code keep simple and readable.
 
 ## Usage
 
 ```
 var rAsync = require('r-async');
-rAsync(object:[initial data], array:tasks, function:finally);
+rAsync(initialData /* object (optional) */, tasks /* array */, finally /* function */);
 ```
 
 The `r-async` module gives you a single function, which requires three parameters:
 
-- **initial data** : *object* (optional) - you can pass initial data to your tasks, this will be passed to the first codes to be executed as parameter
-- **tasks** : *array* - pass the function calls, that you would like to execute. The given calls will execute in series, while nesting further arrays of function calls will alternate between parallel and series execution, as you go more deep in nesting
+- **initialData** : *object* (optional) - you can pass initial data to your tasks, this will be passed to the first codes to be executed as parameter (see below)
+- **tasks** : *array* - pass the functions, that you would like to execute. The given funcions will execute in series, while nesting further arrays of function calls will alternate between parallel and series execution, as you go more deep in nesting (see the example)
 - **finally** : *function* - pass a function here, which gets executed after the tasks, whether there was any errors or everything run fine
 
 ## The tasks
@@ -20,19 +20,19 @@ The `r-async` module gives you a single function, which requires three parameter
 Each task must be defined in the following form, recieving two parameters
 
 ```
-function(object:params, function:callback){ ... }
+function(params /* object */, callback /* function */){ ... }
 ```
 
-- **params** : *object* - parameters recieved from previously executed tasks
-- **callback** : *function* - execute this, to mark, that the task is finished
+- **params** : *object* - parameters recieved from previously executed tasks or initialData
+- **callback** : *function* - you must execute this, to mark, that the task is finished. If you don't call the callback the process is breaked and the other tasks doesn't calls.
 
 The callback must be called with two parameters:
 
 ```
-callback(Error:error, object:params)
+callback(error /* null or any */, params /* object */)
 ```
 
-- **error** : *Error object or null* - if there was any errors during the execution of the task, then this should recieve the Error object describing the error, else it should be null
+- **error** : *Any (for example Error object) or null* - if there was any errors during the execution of the task, then this should recieve the Error object, or any truthy value which describing the error, else it should be null
 - **params** : *object* - the recieved, and optionally altered params object should be sent back to rAsync through this
 
 ### Defining serial and parallel execution
@@ -77,7 +77,10 @@ var tasks = [A, [B, C], D, E]; // A --> B ---> D -> E
 ```
 
 Another level of nesting will provide us with changing back to serial execution and further nesting will keep shifting from the two modes.
-
+```
+var tasks = [A, [B, [C, D], E]; // A ---> B ----> E
+                                    \-> C -> D -/
+```
 It is not possible to change the initial mode of execution, but we can always wrap the tasks in multiple arrays and there is no limit for how deep the nesting can go.
 
 ```
