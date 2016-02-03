@@ -1,16 +1,21 @@
-# r-async
+# rAsync - async revisited
 
-This module is an extension to the popular async module, providing an extra layer of code execution above it. With this you can define a workflow of function calls using nested arrays, providing both parallel and synchronous execution.
+This module is an extension to the popular async module, providing an easy way to combine serial and parallel task execution. With this you can define a workflow of function calls using nested arrays.
+
+## Usage
+
+```
+var rAsync = require('r-async');
+rAsync(object:[initial data], array:tasks, function:finally);
+```
+
+The `r-async` module gives you a single function, which requires three parameters:
+
+- **initial data** : *object* (optional) - you can pass initial data to your tasks, this will be passed to the first codes to be executed as parameter
+- **tasks** : *array* - pass the function calls, that you would like to execute. The given calls will execute in series, while nesting further arrays of function calls will alternate between parallel and series execution, as you go more deep in nesting
+- **finally** : *function* - pass a function here, which gets executed after the tasks, whether there was any errors or everything run fine
 
 
-
-An easy way to combine serial and parallel tasks, and keep your code readability.
-
-rAsync needs 3 parameter:
-
-- initial object (optional) - you can pass initial data to your tasks
-- task definition - an array, which contains tasks, or another array. The odd arrays executing by waterfall, the even arrays executing by parallel - see examples below to understand this.
-- the end task, which called always (if error occured, or normal process)
 
 ```
 /*
