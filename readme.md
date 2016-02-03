@@ -1,63 +1,88 @@
-# r-async
+# rAsync - async rethinked
 
-An easy way to combine serial and parallel tasks, and keep your code readability.
+This module is a wrapper to the popular async module, providing an easy way to combine serial/waterfall and parallel task execution. With this you can define a workflow of function calls using nested arrays. It helps to your code keep simple and readable.
 
-rAsync needs 3 parameter:
-
-- initial object (optional) - you can pass initial data to your tasks
-- task definition - an array, which contains tasks, or another array. The odd arrays executing by waterfall, the even arrays executing by parallel - see examples below to understand this.
-- the end task, which called always (if error occured, or normal process)
+## Usage
 
 ```
-/*
-    A
-   / \
-  B1 B2
-   \ /
-    C
-    |
-    D
-    |
-    E
-   / \
-  F1 F2a
-   |   |
-   |  F2b
-   \ /
-    G
-    |
-    H
-*/
 var rAsync = require('r-async');
-rAsync([
-    A,
-    [B1, B2],
-    C,
-    D,
-    E,
-    [F1, [F2a, F2b]],
-    G],
-    H);
+rAsync(initialData /* object (optional) */, tasks /* array */, finally /* function */);
 ```
 
-Each task signature must be
-```function(params, callback){...}```
-where you must call callback with 2 param:
-```callback(error, params)```
-where the error contains the error, or null. The params object contains your data which you access from all task and you can modify them.
+The `r-async` module gives you a single function, which requires three parameters:
 
-## A "real" example
-If you want to read three files (which contains a number) and save it's sum to database, and after that call a webservice, your code can be like this:
-```
-//...require your modules
-var rAsync = require('r-async');
-rAsync({filenames:['one.txt', 'two.txt', 'three.txt']},
-    [[readFile, readFile, readFile],
-    summarize,
-    saveToDatabase,
-    callWebservice],function(err,params){
-        console.log(err,params)
-    });
+- **initialData** : *object* (optional) - you can pass initial data to your tasks, this will be passed to the first codes to be executed as parameter (see below)
+- **tasks** : *array* - pass the functions, that you would like to execute. The given funcions will execute in series, while nesting further arrays of function calls will alternate between parallel and series execution, as you go more deep in nesting (see the example)
+- **finally** : *function* - pass a function here, which gets executed after the tasks, whether there was any errors or everything run fine
+
+## The tasks
+
+Each task must be defined in the following form, recieving two parameters
 
 ```
-It is much more readable than any other solution.
+function(params /* object */, callback /* function */){ ... }
+```
+
+- **params** : *object* - parameters recieved from previously executed tasks or initialData
+- **callback** : *function* - you must execute this, to mark, that the task is finished. If you don't call the callback the process is breaked and the other tasks doesn't calls.
+
+The callback must be called with two parameters:
+
+```
+callback(error /* null or any */, params /* object */)
+```
+
+- **error** : *Any (for example Error object) or null* - if there was any errors during the execution of the task, then this should recieve the Error object, or any truthy value which describing the error, else it should be null
+- **params** : *object* - the recieved, and optionally altered params object should be sent back to rAsync through this
+
+### Defining serial and parallel execution
+
+Let's look at the task definitions through an example. Supposingly we have five functions, as seen below:
+
+```
+function A(params, callback){
+	console.log('A');
+	callback(null, params);
+}
+function B(params, callback){
+	console.log('B');
+	callback(null, params);
+}
+function C(params, callback){
+	console.log('C');
+	callback(null, params);
+}
+function D(params, callback){
+	console.log('D');
+	callback(null, params);
+}
+function E(params, callback){
+	console.log('E');
+	callback(null, params);
+}
+```
+
+By default, if we just dump these into an array, then rAsync will execute these in series:
+
+```
+var tasks = [A, B, C, D, E]; // A -> B -> C -> D -> E
+rAsync({}, tasks, function(){});
+```
+
+If we introduce an array in the array of tasks, then it's contents will execute in parallel:
+
+```
+var tasks = [A, [B, C], D, E]; // A --> B ---> D -> E
+                                    \-> C -/
+```
+
+Another level of nesting will provide us with changing back to serial execution and further nesting will keep shifting from the two modes.
+```
+var tasks = [A, [B, [C, D], E]; // A ---> B ----> E
+                                    \-> C -> D -/
+```
+It is not possible to change the initial mode of execution, but we can always wrap the tasks in multiple arrays and there is no limit for how deep the nesting can go.
+
+```
+var tasks = [[A, B, C, D, E]]; // all executed in parallel
+```
