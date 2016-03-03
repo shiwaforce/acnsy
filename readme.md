@@ -86,3 +86,23 @@ It is not possible to change the initial mode of execution, but we can always wr
 ```
 var tasks = [[A, B, C, D, E]]; // all executed in parallel
 ```
+## Conditional execution
+```
+//...require your modules
+var rAsync = require('r-async');
+rAsync({}, [
+    yourFirstTask,
+    rAsync.ifTask(yourConditionTask, yourTrueBranchTask, yourElseBranchTask)
+    ],function(err,params){
+        console.log(err,params)
+    });
+
+```
+Where `yourConditionTask` must fill the `ifresult` property in the params. For example:
+
+```
+function yourConditionTask(params, callback){
+    params.ifresult = params.xy==42; //calculate your result of condition
+    callback(null, params);
+}
+```

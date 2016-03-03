@@ -4,6 +4,8 @@
  */
 var createInitialTask = require('./create-initial-task');
 var convertTaskListToRunnable = require('./convert-task-list-to-runnable');
+var ifTask = require('./if-task');
+
 module.exports = function (initialArguments, tasks, end) {
 	if (typeof initialArguments == 'function') {
 		end = tasks;
@@ -14,3 +16,4 @@ module.exports = function (initialArguments, tasks, end) {
 	var runnable = convertTaskListToRunnable(initialTask, tasks, end);
 	runnable();
 };
+module.exports.ifTask = ifTask;
