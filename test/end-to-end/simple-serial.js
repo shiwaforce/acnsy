@@ -8,12 +8,11 @@ describe('simple serial functionality', function () {
 		var params = {a: 1, b: 2, result: 0};
 		var timeA = 100;
 		var timeB = 150;
-
 		var addA = addToResultFactory(timeA, 'a');
 		var addB = addToResultFactory(timeB, 'b');
-
 		var tasks = [addA, addB];
 		var startTime = Date.now();
+
 		acnsy(params, tasks, function (err, givenParams) {
 			var endTime = Date.now();
 			expect(err).toBeFalsy('shouldn\'t pass any error');
