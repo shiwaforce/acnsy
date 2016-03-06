@@ -4,7 +4,10 @@
   "description": "rethinked async",
   "main": "index.js",
   "scripts": {
-    "coverage": "istanbul cover _mocha -- test --recursive -R spec --slow 800"
+    "coverage": "istanbul cover _mocha -- test --recursive -R spec --slow 800",
+    "fastcoverage": "istanbul cover _mocha -- test --recursive -R min --slow 800",
+    "fasttest": "mocha --recursive --slow 800 -R min",
+    "test": "mocha --recursive --slow 800 -R nyan"
   },
   "repository": {
     "type": "git",
