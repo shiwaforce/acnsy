@@ -1,5 +1,5 @@
 require('expectations');
-var testfile = require('../../../lib/common/capitalize-first-letter');
+var testfile = require('../../../../lib/common/capitalize-first-letter');
 describe('capitalize first letter', function () {
 	var values = {
 		null: null,
