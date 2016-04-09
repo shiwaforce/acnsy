@@ -1,5 +1,5 @@
 require('expectations');
-var testfile = require('../../../lib/common/check-type');
+var testfile = require('../../../../lib/common/check-type');
 describe('check type', function () {
 	var matches = ['string', 'String', 'sTRING', 'StRiNg'];
 	matches.forEach(function (type) {
