@@ -1,5 +1,5 @@
 require('expectations');
-var testfile = require('../../../lib/common/get-type');
+var testfile = require('../../../../lib/common/get-type');
 describe('get type', function () {
 	var values = {
 		null: {value: null, type: 'null'},
