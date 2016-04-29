@@ -5,7 +5,9 @@
 var path = require('path');
 var istanbulSourceCodeTransformerFix = require('./sandboxed-module-fix');
 var sandboxedModule = require('sandboxed-module');
+var sinon = require('sinon');
 module.exports = function (filename) {
+	global.sinon = sinon;
 	if (typeof filename != 'string') {
 		throw new Error('must specify the name of the test-file');
 	}
