@@ -15,6 +15,9 @@ describe('get type', function () {
 		filledArray: {value: [1, 2, 3], type: 'array'},
 		true: {value: true, type: 'boolean'},
 		false: {value: false, type: 'boolean'},
+		regex: {value: /regex/, type: 'regexp'},
+		function: {value: new Function(), type: 'function'},
+		date: {value: new Date(), type: 'date'},
 		undefined: {type: 'undefined'}
 	};
 	for (var name in values) {
