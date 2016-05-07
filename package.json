@@ -1,25 +1,39 @@
 {
-  "name": "r-async",
-  "version": "1.2.0",
-  "description": "rethink async",
+  "name": "acnsy",
+  "version": "2.0.1",
+  "description": "rethinked async",
   "main": "index.js",
-  "scripts": {},
+  "scripts": {
+    "coverage": "istanbul cover _mocha -- test --recursive -R spec --slow 800"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/sarkiroka/r-async.git"
   },
   "keywords": [
+    "if",
+    "each",
     "async",
+    "cycle",
+    "repeat",
+    "serial",
     "parallel",
     "waterfall"
   ],
   "author": "sarkiroka",
-  "license": "ISC",
+  "license": "MIT",
   "bugs": {
-    "url": "https://github.com/sarkiroka/r-async/issues"
+    "url": "https://github.com/sarkiroka/acnsy/issues"
   },
-  "homepage": "https://github.com/sarkiroka/r-async#readme",
+  "homepage": "https://github.com/sarkiroka/acnsy#readme",
   "dependencies": {
-    "async": "^1.5.2"
+    "async": "^2.0.0-rc.4"
+  },
+  "devDependencies": {
+    "expectations": "^0.5.2",
+    "istanbul": "^0.4.2",
+    "mocha": "^2.4.5",
+    "sandboxed-module": "^2.0.3",
+    "sinon": "^1.17.3"
   }
 }
