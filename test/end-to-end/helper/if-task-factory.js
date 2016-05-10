@@ -1,9 +1,12 @@
 /**
  * @author sarkiroka on 2016.05.08.
  */
-module.exports = function (result) {
+module.exports = function (result, timeoutMs) {
+	var timeout = timeoutMs || 0;
 	return function (params, callback) {
-		params.ifResult = result;
-		callback(null, params);
+		setTimeout(function () {
+			params.ifResult = result;
+			callback(null, params);
+		}, timeout);
 	}
 };
