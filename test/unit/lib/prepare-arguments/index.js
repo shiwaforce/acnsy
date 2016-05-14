@@ -3,7 +3,7 @@ var getTestfile = require('../../../util/get-testfile')(__filename);
 var getType = require('../../../../lib/common/get-type');
 describe('prepare arguments', function () {
 
-	var mockCreateSafeParameters = sinon.stub();
+	var mockCreateSafeParameters = sinon.stub().returns(42);
 	var mockValidateTaskList = sinon.stub();
 	var requires = {
 		'./create-safe-parameters': mockCreateSafeParameters,
@@ -17,13 +17,9 @@ describe('prepare arguments', function () {
 		mockValidateTaskList.reset();
 	});
 
-	var possibleValues = [null, 42, 'str', {type: 'object'}, /regex/, new Function(), new Date(), undefined];
-	for (var i = 0,iMax=possibleValues.length; i < iMax; i++) {
-		var value = possibleValues[i];
-		possibleValues.push([value]);//array of ...
-	}
+	var possibleValues = [null, 42, 'str', {type: 'object'}, /regex/, new Function(), new Date(), undefined, []];
 	var possibleSignatures = [];
-	var validSignatures = ['arrayoffunction,undefined,undefined', 'arrayoffunction,function,undefined', 'object,arrayoffunction,undefined', 'object,arrayoffunction,function'];
+	var validSignatures = ['array,undefined,undefined', 'array,function,undefined', 'object,array,undefined', 'object,array,function'];
 	for (var i = 0; i < possibleValues.length; i++) {
 		for (var j = 0; j < possibleValues.length; j++) {
 			for (var k = 0; k < possibleValues.length; k++) {
@@ -31,12 +27,9 @@ describe('prepare arguments', function () {
 				var p1 = possibleValues[i];
 				var p2 = possibleValues[j];
 				var p3 = possibleValues[k];
-				var t1=getType(p1);
-				var t2=getType(p2);
-				var t3=getType(p3);
-				if(t1=='array'){t1+='of'+getType(p1[0]);}
-				if(t2=='array'){t2+='of'+getType(p2[0]);}
-				if(t3=='array'){t3+='of'+getType(p3[0]);}
+				var t1 = getType(p1);
+				var t2 = getType(p2);
+				var t3 = getType(p3);
 				params.push(t1);
 				params.push(t2);
 				params.push(t3);
@@ -47,11 +40,13 @@ describe('prepare arguments', function () {
 		}
 	}
 	possibleSignatures.forEach(function (signature) {
-		it('handles when ' + signature.s + ' are the arguments, it\'s ' + (signature.ok ? 'ok' : 'throws an error'), function () {
+		it('handles when ' + signature.s + ' are the arguments, and it should ' + (signature.ok ? 'returns ok' : 'throws an error'), function () {
 			if (signature.ok) {
 				expect(function () {
 					testfile.apply(null, signature.params);
 				}).not.toThrow('shouldn\'t throw an error when good parameters passed');
+				var result = testfile(signature.params[0], signature.params[1], signature.params[2]);
+				expect(result).toEqual(42, 'should returns always safe paramter');
 			} else {
 				expect(function () {
 					testfile.apply(null, signature.params);
