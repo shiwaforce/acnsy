@@ -17,7 +17,7 @@ describe('simple serial functionality', function () {
 			var endTime = Date.now();
 			expect(err).toBeFalsy('shouldn\'t pass any error');
 			expect(givenParams.result).toEqual(params.a + params.b, 'should calculate correctly');
-			var timeDiff = endTime - startTime;
+			var timeDiff = endTime - startTime + 1;
 			expect(timeDiff).not.toBeLessThan(timeA + timeB, 'when the exectution is serial, the all time should not be less than sum of each task times');
 			done();
 		})
