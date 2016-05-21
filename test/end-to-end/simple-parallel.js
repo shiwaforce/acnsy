@@ -17,7 +17,7 @@ describe('simple parallel functionality', function () {
 			var endTime = Date.now();
 			expect(err).toBeFalsy('shouldn\'t pass any error');
 			expect(givenParams.result).toEqual(params.a + params.b, 'should calculate correctly');
-			var timeDiff = endTime - startTime;
+			var timeDiff = endTime - startTime + 1;
 			expect(timeDiff).not.toBeLessThan(Math.max(timeA, timeB), 'when parallel execution, the elapsed time not less than the longest task time');
 			expect(timeDiff).toBeLessThan(timeA + timeB, 'when parallel execution, the elapsed time should be less than sum of each task times');
 			done();
