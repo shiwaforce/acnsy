@@ -19,7 +19,7 @@ describe('simple if functionality', function () {
 			var endTime = Date.now();
 			expect(err).toBeFalsy('shouldn\'t pass any error');
 			expect(givenParams.result).toEqual(params.a, 'should calculate with only "a"');
-			var timeDiff = endTime - startTime;
+			var timeDiff = endTime - startTime + 1;
 			expect(timeDiff).not.toBeLessThan(timeA, 'when use if, the selected branch run only');
 			expect(timeDiff).toBeLessThan(timeB, 'when use if, the selected branch run only');
 			done();
@@ -37,7 +37,7 @@ describe('simple if functionality', function () {
 			var endTime = Date.now();
 			expect(err).toBeFalsy('shouldn\'t pass any error');
 			expect(givenParams.result).toEqual(params.a, 'should calculate with only "a"');
-			var timeDiff = endTime - startTime;
+			var timeDiff = endTime - startTime + 1;
 			expect(timeDiff).not.toBeLessThan(timeA, 'when use if, the selected branch run only');
 			done();
 		})
@@ -56,7 +56,7 @@ describe('simple if functionality', function () {
 			var endTime = Date.now();
 			expect(err).toBeFalsy('shouldn\'t pass any error');
 			expect(givenParams.result).toEqual(params.b, 'should calculate with only "b"');
-			var timeDiff = endTime - startTime;
+			var timeDiff = endTime - startTime + 1;
 			expect(timeDiff).not.toBeLessThan(timeB, 'when use if, the selected branch run only');
 			expect(timeDiff).toBeLessThan(timeA, 'when use if, the selected branch run only');
 			done();
@@ -74,7 +74,7 @@ describe('simple if functionality', function () {
 			var endTime = Date.now();
 			expect(err).toBeFalsy('shouldn\'t pass any error');
 			expect(givenParams.result).toEqual(0, 'should not calculate with any');
-			var timeDiff = endTime - startTime;
+			var timeDiff = endTime - startTime + 1;
 			expect(timeDiff).toBeLessThan(timeA, 'when use if, the selected branch run only, and if not defined it, the run noop task quickly');
 			done();
 		})
@@ -91,7 +91,7 @@ describe('simple if functionality', function () {
 			var endTime = Date.now();
 			expect(err).toBeFalsy('shouldn\'t pass any error');
 			expect(givenParams.result).toEqual(0, 'should not calculate with any');
-			var timeDiff = endTime - startTime;
+			var timeDiff = endTime - startTime + 1;
 			expect(timeDiff).toBeLessThan(timeA, 'when use if, the selected branch run only, and if not defined it, the run noop task quickly');
 			done();
 		})
