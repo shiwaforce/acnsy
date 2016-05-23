@@ -26,7 +26,7 @@ describe('simple each functionality', function () {
 			var endTime = Date.now();
 			expect(err).toBeFalsy('shouldn\'t pass any error');
 			expect(givenParams.result).toEqual(sum, 'should calculate correctly');
-			var timeDiff = endTime - startTime;
+			var timeDiff = endTime - startTime + 1;
 			expect(timeDiff).not.toBeLessThan(time, 'each calls the task for each item');
 			expect(timeDiff).toBeLessThan(time * 3, 'each executed parallel');
 			done();
