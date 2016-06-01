@@ -1,0 +1,21 @@
+{
+	"sites": [
+		{
+			"name": "Home Page",
+			"url": "http://sarkiroka.hu"
+		},
+		{
+			"name": "Search Page",
+			"url": "http://google.com"
+		},
+		{
+			"name": "The solution's Page",
+			"url": "http://stackoverflow.com"
+		}
+	],
+	"tresholds": {
+		"fast": 100,
+		"normal": 500,
+		"slow": 3000
+	}
+}
